@@ -12,7 +12,7 @@ namespace ILMerging
 		[STAThread]
 		public static int Main(string[] args)
 		{
-			ILMerge merger = new ILMerging.ILMerge();
+			ILMerge merger = new ILMerge();
 
 			#region Check Usage
 

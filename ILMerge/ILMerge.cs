@@ -29,7 +29,7 @@ namespace ILMerging {
     private string logFile = null;
     private Kind targetKind = Kind.SameAsPrimaryAssembly;
     private string outputFileName = null;
-    private ArrayList assemblyNames = null;
+    public ArrayList assemblyNames = null;
     private bool keyfileSpecified = false;
     private string keyfile = null;
     private bool keyContainerSpecified = false;
@@ -890,7 +890,7 @@ namespace ILMerging {
     /// Sets internal state to reflect arguments specified by user on command line.
     /// </summary>
     /// <param name="args"></param>
-    internal virtual bool ProcessCommandLineOptions(string[] args) {
+    public virtual bool ProcessCommandLineOptions(string[] args) {
       bool ok = true;
       this.assemblyNames = new ArrayList(args.Length); // can't be more arguments than that
       for (int i = 0, n = args.Length; i < n && ok; i++)  // stop processing if not okay
