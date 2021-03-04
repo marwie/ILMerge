@@ -6,8 +6,11 @@ using System;
 using System.IO;
 using System.Compiler;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using AssemblyResolving;
+
+[assembly: InternalsVisibleTo("ILMerge.Cli")]
 
 namespace ILMerging {
   /// <summary>
@@ -22,7 +25,7 @@ namespace ILMerging {
 
     private string[] directories = null;
     private ArrayList searchDirs = new ArrayList();
-    private bool log = false;
+    internal bool log = false;
     private string logFile = null;
     private Kind targetKind = Kind.SameAsPrimaryAssembly;
     private string outputFileName = null;
@@ -99,7 +102,7 @@ namespace ILMerging {
     /// <summary>
     /// The string shown to the user when there is an error detected in the command line.
     /// </summary>
-    protected virtual string UsageString {
+    internal virtual string UsageString {
       get {
         return
 #if CROSSPLATFORM
@@ -828,7 +831,7 @@ namespace ILMerging {
     /// </summary>
     /// <param name="args">Exactly the same array as passed to Main.</param>
     /// <returns>true iff command line args are incorrect (in some simple cases)</returns>
-    protected virtual bool CheckUsage(string[] args) {
+    internal virtual bool CheckUsage(string[] args) {
       if (args.Length < 1) {
         return true;
       }
@@ -846,7 +849,7 @@ namespace ILMerging {
     /// Writes to Console for each violation.
     /// </summary>
     /// <returns>True iff no error is detected.</returns>
-    protected virtual bool ValidateOptions() {
+    internal virtual bool ValidateOptions() {
       bool errorInOptions = false;
       if (!(this.assemblyNames.Count > 0)) {
         Console.WriteLine("Must specify at least one input file!");
@@ -887,7 +890,7 @@ namespace ILMerging {
     /// Sets internal state to reflect arguments specified by user on command line.
     /// </summary>
     /// <param name="args"></param>
-    protected virtual bool ProcessCommandLineOptions(string[] args) {
+    internal virtual bool ProcessCommandLineOptions(string[] args) {
       bool ok = true;
       this.assemblyNames = new ArrayList(args.Length); // can't be more arguments than that
       for (int i = 0, n = args.Length; i < n && ok; i++)  // stop processing if not okay
@@ -1176,7 +1179,7 @@ namespace ILMerging {
     /// </summary>
     /// <param name="s">String to write to log. May have placeholder args in it.</param>
     /// <param name="args">Zero or more arguments to fill the placeholder args in s.</param>
-    protected void WriteToLog(string s, params object[] args) {
+    internal void WriteToLog(string s, params object[] args) {
       if (log) {
         if (logFile != null) {
           StreamWriter writer = new System.IO.StreamWriter(logFile, true);

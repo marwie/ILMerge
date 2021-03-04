@@ -244,7 +244,7 @@ namespace AssemblyResolving
 							fullName);
 						if (tempDebugInfo) {
 							// Don't pass the debugInfo flag to GetAssembly unless the PDB file exists.
-							string pdbFullName = Path.Combine(referencingModule.Directory, assemblyReference.Name + ".pdb");
+							string pdbFullName = Path.Combine(referencingModule.Directory ?? string.Empty, assemblyReference.Name + ".pdb");
 							if (!File.Exists(pdbFullName)) {
 								WriteToLog("Can not find PDB file. Debug info will not be available for assembly '{0}'.",
 									assemblyReference.Name);
@@ -288,7 +288,7 @@ namespace AssemblyResolving
 									fullName);
 								if (tempDebugInfo) {
 									// Don't pass the debugInfo flag to GetAssembly unless the PDB file exists.
-									string pdbFullName = Path.Combine(referencingModule.Directory, assemblyReference.Name + ".pdb");
+									string pdbFullName = Path.Combine(referencingModule.Directory ?? string.Empty, assemblyReference.Name + ".pdb");
 									if (!File.Exists(pdbFullName)) {
 										WriteToLog("Can not find PDB file. Debug info will not be available for assembly '{0}'.",
 											assemblyReference.Name);

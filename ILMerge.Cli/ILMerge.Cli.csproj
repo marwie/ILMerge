@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net452</TargetFramework>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ILMerge\ILMerge.csproj" />
+    </ItemGroup>
+    
+    <Target Name="ILMergeConsoleApp" BeforeTargets="AfterBuild">
+
+        <Error Text="ILMerge currently only works on Windows" Condition="'$(OS)' != 'Windows_NT'" />
+
+        <Message Text="Running IL merging on System.Compiler and ILMerge.exe" Importance="High" />
+        <MakeDir Directories="$(OutDir)\final" />
+
+        <PropertyGroup>
+            <ILMergeCommand>ILMerge.Cli.exe /ndebug "/log:$(MSBuildProjectDirectory)/$(IntermediateOutputPath)ilmerge.log" "/targetplatform:v4,%ProgramFiles(x86)%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /t:dll /out:final/ILMerge.dll ILMerge.dll System.Compiler.dll</ILMergeCommand>
+        </PropertyGroup>
+
+        <Exec Command="$(ILMergeCommand)" WorkingDirectory="$(OutDir)" />
+    </Target>
+
+<!--    <Target Name="BeforeSign" BeforeTargets="SignFiles">-->
+<!--        <ItemGroup>-->
+<!--            <FilesToSign Include="$(MSBuildThisFileDirectory)\$(OutDir)\final\ILMerge.exe">-->
+<!--                <Authenticode>Microsoft</Authenticode>-->
+<!--                <StrongName>StrongName</StrongName>-->
+<!--            </FilesToSign>-->
+<!--        </ItemGroup>-->
+<!--        <Message Text="Files To Sign : @(FilesToSign, '%0a')" Importance="High" />-->
+<!--    </Target>-->
+
+</Project>
